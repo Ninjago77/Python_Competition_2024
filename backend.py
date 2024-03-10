@@ -1,8 +1,9 @@
-import itertools # built-in libraries
-from string import ascii_lowercase,ascii_uppercase # built-in libraries
+import itertools # built-in library
+from string import ascii_lowercase,ascii_uppercase # built-in library
+
 
 def backwardify(text:str) -> str:
-    return text[::-1]
+    return text[::-1] # Uses string slicing
 
 def Reverse_Cipher(text:str) -> str:
     return backwardify(text)
