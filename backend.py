@@ -1,11 +1,14 @@
 import itertools # built-in libraries
 from string import ascii_lowercase,ascii_uppercase # built-in libraries
 
-def Reverse_Cipher(text:str) -> str:
+def backwardify(text:str) -> str:
     return text[::-1]
 
-ascii_lowercase_R = list(reversed(ascii_lowercase))
-ascii_uppercase_R = list(reversed(ascii_uppercase))
+def Reverse_Cipher(text:str) -> str:
+    return backwardify(text)
+
+ascii_lowercase_R = backwardify(ascii_lowercase)
+ascii_uppercase_R = backwardify(ascii_uppercase)
 def Atbash_Cipher(text:str) -> str:
     return "".join([
         ascii_lowercase_R[ascii_lowercase.index(letter)]
