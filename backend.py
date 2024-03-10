@@ -8,26 +8,19 @@ def backwardify(text:str) -> str:
 def Reverse_Cipher(text:str) -> str:
     return backwardify(text)
 
-ascii_lowercase_R = backwardify(ascii_lowercase)
-ascii_uppercase_R = backwardify(ascii_uppercase)
+Atbash_Mapping_Table = str.maketrans(ascii_lowercase+ascii_uppercase,backwardify(ascii_lowercase)+backwardify(ascii_uppercase))
 def Atbash_Cipher(text:str) -> str:
-    return "".join([
-        ascii_lowercase_R[ascii_lowercase.index(letter)]
-            if letter in ascii_lowercase else
-        ascii_uppercase_R[ascii_uppercase.index(letter)]
-            if letter in ascii_uppercase else
-        letter 
-        for letter in text])
+    return text.translate(Atbash_Mapping_Table)
 
-def Caeser_Cipher(text:str,shifts:int) -> str:
-    shifts = shifts % 26
-    return "".join([
-        ascii_lowercase[(ascii_lowercase.index(letter)+shifts) % 26]
-            if letter in ascii_lowercase else
-        ascii_uppercase[(ascii_uppercase.index(letter)+shifts) % 26]
-            if letter in ascii_uppercase else
-        letter 
-        for letter in text])
+Caesar_Mapping_Tables = [
+    str.maketrans(
+        ascii_lowercase+
+        ascii_uppercase,
+        ascii_lowercase[i:]+ascii_lowercase[:i]+
+        ascii_uppercase[i:]+ascii_uppercase[:i])
+    for i in range(26)]
+def Caesar_Cipher(text: str, shifts: int):
+    return text.translate(Caesar_Mapping_Tables[shifts%26])
 
 def Vigenere_Cipher(text:str,key:str,to_decrypt:bool=False,decryption_key:bool=False) -> tuple[str,str|None]:
     key = "".join(list(itertools.filterfalse(lambda letter: letter not in ascii_uppercase,key.upper())))
