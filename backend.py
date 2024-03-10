@@ -2,7 +2,7 @@ import itertools # built-in libraries
 from string import ascii_lowercase,ascii_uppercase # built-in libraries
 
 def Reverse_Cipher(text:str) -> str:
-    return "".join(list(reversed(text)))
+    return text[::-1]
 
 ascii_lowercase_R = list(reversed(ascii_lowercase))
 ascii_uppercase_R = list(reversed(ascii_uppercase))
@@ -33,9 +33,9 @@ def Vigenere_Cipher(text:str,key:str,to_decrypt:bool=False,decryption_key:bool=F
     key = key[:len(text)] if len(text) <= len(key) else str(key*((len(text)//len(key))+1))[:len(text)]
     return "".join([
         ascii_lowercase[(ascii_lowercase.index(letter)+ascii_uppercase.index(k)) % 26]
-            if letter in ascii_lowercase else
+            if letter.islower() else
         ascii_uppercase[(ascii_uppercase.index(letter)+ascii_uppercase.index(k)) % 26]
-            if letter in ascii_uppercase else
+            if letter.isupper() else
         letter 
         for letter,k in zip(text,key)]),(rev if decryption_key else None)
 
