@@ -8,7 +8,10 @@ def backwardify(text:str) -> str:
 def Reverse_Cipher(text:str) -> str:
     return backwardify(text)
 
-Atbash_Mapping_Table = str.maketrans(ascii_lowercase+ascii_uppercase,backwardify(ascii_lowercase)+backwardify(ascii_uppercase))
+Atbash_Mapping_Table = str.maketrans(
+    ascii_lowercase+ascii_uppercase,
+    backwardify(ascii_lowercase)+backwardify(ascii_uppercase)
+)
 def Atbash_Cipher(text:str) -> str:
     return text.translate(Atbash_Mapping_Table)
 
@@ -23,16 +26,11 @@ def Caesar_Cipher(text: str, shifts: int):
     return text.translate(Caesar_Mapping_Tables[shifts%26])
 
 def Vigenere_Cipher(text:str,key:str,to_decrypt:bool=False,decryption_key:bool=False) -> tuple[str,str|None]:
-    key = "".join(list(itertools.filterfalse(lambda letter: letter not in ascii_uppercase,key.upper())))
+    key = "".join(filter(lambda letter: letter in ascii_uppercase, key.upper()))
     if to_decrypt or decryption_key:
-        rev = "".join([ascii_uppercase[-ascii_uppercase.index(r) % 26] for r in key])
+        Reverse_Mapping_Dict = {char: ascii_uppercase[-i % 26] for i, char in enumerate(ascii_uppercase)}
+        rev = "".join(Reverse_Mapping_Dict.get(r, r) for r in key)
         if to_decrypt: key = rev
-    key = key[:len(text)] if len(text) <= len(key) else str(key*((len(text)//len(key))+1))[:len(text)]
-    return "".join([
-        ascii_lowercase[(ascii_lowercase.index(letter)+ascii_uppercase.index(k)) % 26]
-            if letter.islower() else
-        ascii_uppercase[(ascii_uppercase.index(letter)+ascii_uppercase.index(k)) % 26]
-            if letter.isupper() else
-        letter 
+    key = (key*((len(text)//len(key))+1))[:len(text)]
+    return "".join([letter.translate(Caesar_Mapping_Tables[ascii_uppercase.index(k)])
         for letter,k in zip(text,key)]),(rev if decryption_key else None)
-
