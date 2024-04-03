@@ -24,7 +24,7 @@
                         <input type="radio" id="reverse" value="reverse" name="cipher">
                         <label for="reverse">Reverse Cipher</label><br>
                         <input type="radio" id="atbash" value="atbash" name="cipher">
-                        <label for="Atbash Cipher">Atbash Cipher</label><br>
+                        <label for="atbash">Atbash Cipher</label><br>
                         <input type="radio" id="caesar" value="caesar" name="cipher">
                         <label for="caesar">Caesar Cipher</label><br>
                         <input type="radio" id="vigenere" value="vigenere" name="cipher">
@@ -51,6 +51,8 @@
                         <option value="enc">Encrypt</option>
                 
                     </select>
+                    <label for="keys" class = "keylabel">KEYS:</label>
+                    <input id = "keys" class = "keys">
                     
                     
                     
@@ -89,7 +91,15 @@
                     cinput = cinput.value;
                     decr = document.getElementById("dec")
                     decr = dec.value;
-                    
+                    keys = document.getElementById("keys");
+                    keys = keys.value;
+                    if (cipherType=="reverse") {
+                        answer = pyodide.runPython(`Reverse_Cipher('${cinput}')`)
+                    } else if (cipherType = "atbash") {
+                        answer = pyodide.runPython(`Atbash_Cipher('${cinput}')`)
+                    } else if (cipherType = "caesar") {
+                        answer = pyodide.runPython(`Caesar_Cipher('${cinput}')`)
+                    }
                 }
 
 

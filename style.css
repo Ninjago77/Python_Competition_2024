@@ -52,6 +52,20 @@ html {
 
 }
 
+.keys {
+    height: 30px;
+    width: 150px;
+    top: 50px;
+    left: -200px;
+    position: relative
+}
+
+.keylabel {
+    top: 50px;
+    left: -200px;
+    position: relative;
+}
+
 .subbut {
     border-radius: 5px;
     font-family:  "Roboto Condensed", sans-serif;
