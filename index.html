@@ -9,7 +9,7 @@
         <script type="text/javascript">
             async function main(){
                 let pyodide = await loadPyodide();
-                pyodide.runPython(await (await fetch("backend.py")).text());
+                pyodide.runPython(await (await fetch('backend.py')).text());
                 // DOMINIC WRITE JS HERE
                 // also it wont work locally unless u use the command "python -m http.server"
                 // when i host it online, it wont have that problem
