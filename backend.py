@@ -4,6 +4,10 @@ ascii_letters = ascii_lowercase+ascii_uppercase
 def backwardify(text:str) -> str:
     return text[::-1]
 
+def pairwise(iterable):
+    a = iter(iterable)
+    return zip(a, a)
+
 def Reverse_Cipher(text:str) -> str:
     return backwardify(text)
 
@@ -54,3 +58,38 @@ def Affine_Cipher(text:str,multiplier:int,shifts:int,decrypt:bool=False):
             if char in ascii_uppercase else 
         char for char in available_chars
     ])))
+
+Bifid_J_to_I_Mapping_Table = str.maketrans("jJ","iI")
+Bifid_Table = {
+    11:"A",12:"B",13:"C",14:"D",15:"E",
+    21:"F",22:"G",23:"H",24:"I",25:"K",
+    31:"L",32:"M",33:"N",34:"O",35:"P",
+    41:"Q",42:"R",43:"S",44:"T",45:"U",
+    51:"V",52:"W",53:"X",54:"Y",55:"Z",
+}
+Inverse_Bifid_Table = {v: str(k) for k, v in Bifid_Table.items()}
+def Bifid_Cipher(text:str,decrypt:bool=False):
+    text = text.translate(Bifid_J_to_I_Mapping_Table)
+    if decrypt:
+        allblocks = [item for sublist in [
+            (int(Inverse_Bifid_Table[char][0]),int(Inverse_Bifid_Table[char][1]))
+            for char in text.upper()
+            if char in ascii_uppercase
+        ] for item in sublist]
+        rows, columns = allblocks[:len(allblocks)//2], allblocks[len(allblocks)//2:]
+    else:
+        rows = []
+        columns = []
+        for char in text.upper():
+            if char in ascii_uppercase:
+                rows.append(int(Inverse_Bifid_Table[char][0]))
+                columns.append(int(Inverse_Bifid_Table[char][1]))
+    val = zip(rows,columns) if decrypt else pairwise(rows+columns)
+    letters = [Bifid_Table[(r*10)+c] for r,c in val]
+    return "".join([
+        letters.pop(0).lower()
+            if char in ascii_lowercase else
+        letters.pop(0)
+            if char in ascii_uppercase else
+        char for char in text
+        ])
