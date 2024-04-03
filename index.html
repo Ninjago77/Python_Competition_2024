@@ -6,6 +6,74 @@
     </head>
     <body>
         <!--DOMINIC WRITE HTML HERE-->
+
+        <div class = "header">
+            <font size = "+3">
+                <h1>Header</h1>
+            </font>
+            
+        </div>
+
+        
+
+
+        <div class = "main">
+            <div class = "grid-item">
+                <font size="+5">
+                    <form class = "grid-item" id = "ciphertype">
+                        <input type="radio" id="reverse" value="reverse" name="cipher">
+                        <label for="reverse">Reverse Cipher</label><br>
+                        <input type="radio" id="atbash" value="atbash" name="cipher">
+                        <label for="Atbash Cipher">Atbash Cipher</label><br>
+                        <input type="radio" id="caesar" value="caesar" name="cipher">
+                        <label for="caesar">Caesar Cipher</label><br>
+                        <input type="radio" id="vigenere" value="vigenere" name="cipher">
+                        <label for="vigenere">Vigenere Cipher</label><br>
+                        <input type="radio" id="affine" value="affine" name="cipher">
+                        <label for="affine">Affine Cipher</label><br>
+                        <input type="radio" id="bifid" value="bifid" name="cipher">
+                        <label for="bifid">Bifid Cipher</label><br>
+                    </form>
+                    
+                </font>
+                    
+    
+    
+            </div>
+            <div class =  "grid-item">
+                <span>
+                    <label for="cinput">INPUT:</label>
+                    <input id = "cinput" class = "cipinput">
+                  
+                    
+                    <select id="dec" name="dec" class = "dec">
+                        <option value="dec">Decrypt (default)</option>
+                        <option value="enc">Encrypt</option>
+                
+                    </select>
+                    
+                    
+                    
+                </span><br>
+                
+                <div class = "cipout">
+                    <p class = "output">Your answer will appear here!</p>
+                </div><br>
+               
+                <button class = "subbut">Submit</button>
+             
+                
+
+                </div>
+            </div>
+        </div>
+        
+        
+
+
+
+
+
         <script type="text/javascript">
             async function main(){
                 let pyodide = await loadPyodide();
@@ -14,11 +82,23 @@
                 // also it wont work locally unless u use the command "python -m http.server"
                 // when i host it online, it wont have that problem
                 // also line 17, 18, 19 is an example from me to you to show you how it works (you can delete it later)
+                function getValues() {
+                    cipherType = document.getElementById("ciphertype");
+                    cipherType = cipherType.value;
+                    cinput = document.getElementById("cinput");
+                    cinput = cinput.value;
+                    decr = document.getElementById("dec")
+                    decr = dec.value;
+                    
+                }
+
+
                 console.log("hi")
                 var name = prompt("What is your name reversed?(later check console)");
                 console.log(pyodide.runPython(`Reverse_Cipher('${name}')`))
             }
             main();
         </script>
+
     </body>
 </html>

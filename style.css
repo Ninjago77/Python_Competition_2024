@@ -1,5 +1,64 @@
 /*use icons and fonts from fonts.google.com & fontawesome.com*/
 /*more icons at flaticon.com*/
 /*dominic pls use them*/
-
+/*Shan you're annoying shaddup*/
 /*DOMINIC WRITE CSS HERE*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+html {
+    height: 100%;
+    width: 100%;
+    font-family: "Roboto Condensed", sans-serif
+}
+
+.header {
+    text-align: center;
+    align-items: center;
+    position: relative;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2em;
+}
+
+.grid-item {
+    position: relative
+}
+
+
+.cipinput {
+    height: 30px;
+    width: 400px;
+}
+
+.dec {
+    height: 30px;
+    width: 150 px;
+
+    
+}
+
+.cipout {
+    height: 400px;
+    width: 600px;
+    border: 2px solid black;
+    border-radius: 25px;
+    position: absolute;
+    top: 100px;
+    
+
+
+}
+
+.subbut {
+    border-radius: 5px;
+    font-family:  "Roboto Condensed", sans-serif;
+    height: 30px;
+    width: 100px;
+    left: 250px;
+    position: absolute;
+    background-color: beige;
+
+}
