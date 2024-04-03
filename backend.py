@@ -43,7 +43,7 @@ def Vigenere_Cipher(text:str,key:str,to_decrypt:bool=False,decryption_key:bool=F
 Affine_Multiplier_Options = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25] # 26 coprimes
 def Affine_Cipher(text:str,multiplier:int,shifts:int,decrypt:bool=False):
     if multiplier not in Affine_Multiplier_Options:
-        raise ValueError(f"Nah bro, must be in {", ".join([str(n) for n in Affine_Multiplier_Options])}")
+        raise ValueError("Nah bro, must be in ["+", ".join([str(n) for n in Affine_Multiplier_Options])+"]")
     if decrypt: inverse_multiplier = next(i for i in range(1, 26) if (multiplier * i) % 26 == 1)
     func = (lambda index:
         ((inverse_multiplier)*(index-shifts))%26

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!--DOMINIC WRITE HTML HERE-->
+        <script type="text/javascript">
+            async function main(){
+                let pyodide = await loadPyodide();
+                pyodide.runPython(await (await fetch("backend.py")).text());
+                // DOMINIC WRITE JS HERE
+                // also it wont work locally unless u use the command "python -m http.server"
+                // when i host it online, it wont have that problem
+                // also line 17, 18, 19 is an example from me to you to show you how it works (you can delete it later)
+                console.log("hi")
+                var name = prompt("What is your name reversed?(later check console)");
+                console.log(pyodide.runPython(`Reverse_Cipher('${name}')`))
+            }
+            main();
+        </script>
+    </body>
+</html>
