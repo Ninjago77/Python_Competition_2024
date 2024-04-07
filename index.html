@@ -59,7 +59,7 @@
                 </span><br>
                 
                 <div class = "cipout">
-                    <p class = "output">Your answer will appear here!</p>
+                    <p class = "output" id = "output">Your answer will appear here!</p>
                 </div><br>
                
                 <button class = "subbut">Submit</button>
@@ -84,6 +84,12 @@
                 // also it wont work locally unless u use the command "python -m http.server"
                 // when i host it online, it wont have that problem
                 // also line 17, 18, 19 is an example from me to you to show you how it works (you can delete it later)
+                /*
+
+                                            
+                
+                */
+
                 function getValues() {
                     cipherType = document.getElementById("ciphertype");
                     cipherType = cipherType.value;
@@ -93,13 +99,26 @@
                     decr = dec.value;
                     keys = document.getElementById("keys");
                     keys = keys.value;
+                    var answer;
                     if (cipherType=="reverse") {
                         answer = pyodide.runPython(`Reverse_Cipher('${cinput}')`)
-                    } else if (cipherType = "atbash") {
+                    } else if (cipherType == "atbash") {
                         answer = pyodide.runPython(`Atbash_Cipher('${cinput}')`)
-                    } else if (cipherType = "caesar") {
-                        answer = pyodide.runPython(`Caesar_Cipher('${cinput}')`)
+                    } else if (cipherType == "caesar" && decr == "dec") {
+                        answer = pyodide.runPython(`Caesar_Cipher('${cinput}',${keys*-1})`)
+                    } else if (cipherType == "caesar" && decr == "enc") {
+                        answer = pyodide.runPython(`Caesar_Cipher('${cinput}',${keys})`)
+                    } else if (cipherType == "Vigenere" && decr == "dec") {
+                        answer = pyodide.runPython(`vigenere_Cipher('${cinput}',${keys*-1})`)
+                    } else if (cipherType == "Vigenere" && decr == "enc") {
+                        answer = pyodide.runPython(`vigenere_Cipher('${cinput}',${keys})`)
+                    } else if (cipherType == "affine") {
+                        answer = pyodide.runPython(`Affine_Cipher('${cinput}',${keys})`)
+                    } else if (cipherType == "bifid") {
+                        answer = pyodide.runPython(`Bifid_Cipher('${cinput}',${keys})`)
                     }
+                    document.getElementById("output").innerHTML = answer;
+                    
                 }
 
 
