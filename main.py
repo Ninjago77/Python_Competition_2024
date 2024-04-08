@@ -4,6 +4,13 @@ import flet as ft
 def main(page: ft.Page):
     global Cipher_Index,Display_Cipher,CipherControls,mobile
     mobile = page.width < page.height
+    if mobile:
+        Nav_Control = ft.NavigationDrawer
+        Nav_Control_Dest = ft.NavigationDrawerDestination
+    else:
+        Nav_Control = ft.NavigationRail
+        Nav_Control_Dest = ft.NavigationRailDestination
+    
     page.title = "Cipher Selector"
     Cipher_Index = 0
     Display_Cipher = ft.Container()
@@ -121,13 +128,15 @@ def main(page: ft.Page):
         ]),
         ft.Column(controls= [# About
             ft.Text("About The App",theme_style=ft.TextThemeStyle.DISPLAY_SMALL),
-            ft.Text("This Project was made by Shanvanth Arunmozhi & Dominic Koh for the 2024 Python Coding Challenge & its theme:- Ciphers!\n\n\n Mobile View Coming Soon!",width=300,theme_style=ft.TextThemeStyle.BODY_LARGE),
+            ft.Text("This Project was made by Shanvanth Arunmozhi & Dominic Koh for the 2024 Python Coding Challenge & its theme:- Ciphers!",width=300,theme_style=ft.TextThemeStyle.BODY_LARGE),
         ]),
 
     ]
     def nav_rail_switch(e):
-        global Cipher_Index,Display_Cipher
+        global Cipher_Index,Display_Cipher,mobile
         Cipher_Index = e.control.selected_index
+        if mobile:
+            page.drawer.open = False
         display_cipher_update()
     def display_cipher_update():
         global Cipher_Index,Display_Cipher
@@ -138,53 +147,75 @@ def main(page: ft.Page):
         title=ft.Text("Cipher Selector",color=ft.colors.ON_PRIMARY),
         bgcolor=ft.colors.PRIMARY,
     )
-    page.add(
-        ft.Row([
-                ft.NavigationRail(
-                    destinations=[
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
-                            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
-                            label_content=ft.Text("Reverse Cipher"),
-                        ),
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
-                            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
-                            label_content=ft.Text("Atbash Cipher"),
-                        ),
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
-                            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
-                            label_content=ft.Text("Caesar Cipher"),
-                        ),
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
-                            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
-                            label_content=ft.Text("Vigenere Cipher"),
-                        ),
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
-                            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
-                            label_content=ft.Text("Affine Cipher"),
-                        ),
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
-                            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
-                            label_content=ft.Text("Bifid Cipher"),
-                        ),
-                        ft.NavigationRailDestination(
-                            icon=ft.icons.INFO_OUTLINE_ROUNDED,
-                            selected_icon=ft.icons.INFO_ROUNDED,
-                            label_content=ft.Text("About"),
-                        ),
-                    ],
-                    on_change= nav_rail_switch,
-                ),
-                ft.VerticalDivider(width=1),
-                Display_Cipher,
-            ],
-            expand=True,
-        )
+    Nav_Control_Final = Nav_Control(
+        on_change= nav_rail_switch,
     )
+    Nav_Control_List = [
+        Nav_Control_Dest(
+            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
+            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
+            label="Reverse Cipher",
+        ),
+        Nav_Control_Dest(
+            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
+            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
+            label="Atbash Cipher",
+        ),
+        Nav_Control_Dest(
+            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
+            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
+            label="Caesar Cipher",
+        ),
+        Nav_Control_Dest(
+            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
+            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
+            label="Vigenere Cipher",
+        ),
+        Nav_Control_Dest(
+            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
+            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
+            label="Affine Cipher",
+        ),
+        Nav_Control_Dest(
+            icon=ft.icons.KEYBOARD_ARROW_RIGHT_OUTLINED,
+            selected_icon=ft.icons.KEYBOARD_DOUBLE_ARROW_RIGHT_ROUNDED,
+            label="Bifid Cipher",
+        ),
+        Nav_Control_Dest(
+            icon=ft.icons.INFO_OUTLINE_ROUNDED,
+            selected_icon=ft.icons.INFO_ROUNDED,
+            label="About",
+        ),
+    ]
+    if mobile: Nav_Control_Final.controls = Nav_Control_List
+    else: Nav_Control_Final.destinations = Nav_Control_List
+    if mobile:
+        def menu_open(e):
+            page.drawer.open = True
+            page.drawer.update()
+        page.appbar.leading = ft.IconButton(
+            icon=ft.icons.MENU_ROUNDED,
+            icon_color=ft.colors.ON_PRIMARY,
+            on_click=menu_open,
+        )
+        page.drawer = Nav_Control_Final
+        page.add(
+            ft.Row([
+                    ft.VerticalDivider(width=1),
+                    Display_Cipher,
+                ],
+                expand=True,
+            )
+        )
+    else:
+        page.add(
+            ft.Row([
+                    Nav_Control_Final,
+                    ft.VerticalDivider(width=1),
+                    Display_Cipher,
+                ],
+                expand=True,
+            )
+        )
 
 ft.app(target=main,web_renderer=ft.WebRenderer.HTML,view=ft.AppView.WEB_BROWSER)
