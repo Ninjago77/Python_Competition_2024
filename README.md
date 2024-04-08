@@ -1,4 +1,4 @@
-# Hi this is the Cipher Selector
+# The Cipher Selector App
 ## Python Coding Challenge 2024
 We made this project for the Python Coding Challenge 2024
 for the theme:-   CIPHERS!!!
