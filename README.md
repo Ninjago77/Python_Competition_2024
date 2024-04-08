@@ -1,7 +1,19 @@
-domnic, here are ur start lines
-
-index.html - line 8 - html,
-
-index.html - line 13 - js
-
-style.css - line 5 - css
+### Hi this is the Cipher Selector
+## Python Coding Challenge 2024
+We made this project for the Python Coding Challenge 2024
+for the theme:-   CIPHERS!!!
+## How to Install/ Use
+I will soon be hosting it on the web, but for now
+run these commands:-
+```bash
+git clone https://github.com/Ninjago77/Python_Competition_2024.git
+```
+or download the code,
+then install the requirements - 
+```bash
+python -m pip install -r requirements.txt
+```
+then run the code - 
+```bash
+python -m main.py
+```
