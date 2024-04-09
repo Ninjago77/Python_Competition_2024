@@ -4,15 +4,17 @@ import flet as ft
 def main(page: ft.Page):
     global Cipher_Index,Display_Cipher,CipherControls,mobile
     def resize(e):
+        def close_dia(e):
+            page.dialog.open = False
+            page.update()
         page.dialog = ft.AlertDialog(
-            title=ft.Text("Hello there! You just resized me!\nReload Me Please! >v<"),
+            title=ft.Text("Hello there! You just resized me!\nReload Me Please! >v<\n Or I might look wierd..."),
             actions=[ft.FloatingActionButton(
-                text="Sure",
-                icon=ft.icons.REFRESH,
-                url="https://cipherselector.shantech.pro",
-                url_target="_self",
+                text="I don't care",
+                icon=ft.icons.CLOSE_ROUNDED,
+                on_click=close_dia,
             )],
-            on_dismiss=resize,
+            modal=True,
         )
         page.dialog.open = True
         page.update()
