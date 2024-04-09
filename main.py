@@ -3,6 +3,20 @@ import flet as ft
 
 def main(page: ft.Page):
     global Cipher_Index,Display_Cipher,CipherControls,mobile
+    def resize(e):
+        page.dialog = ft.AlertDialog(
+            title=ft.Text("Hello there! You just resized me!\nReload Me Please! >v<"),
+            actions=[ft.FloatingActionButton(
+                text="Sure",
+                icon=ft.icons.REFRESH,
+                url="https://cipherselector.shantech.pro",
+                url_target="_self",
+            )],
+            on_dismiss=resize,
+        )
+        page.dialog.open = True
+        page.update()
+    page.on_resize = resize
     mobile = page.width < page.height
     if mobile:
         Nav_Control = ft.NavigationDrawer
@@ -13,7 +27,18 @@ def main(page: ft.Page):
     
     page.title = "Cipher Selector"
     Cipher_Index = 0
-    Display_Cipher = ft.Container()
+    view_scale = 1.0
+    if page.width <= 350:
+        view_scale = page.width/400
+    Display_Cipher = ft.Column(
+        controls=[ft.Row(
+            controls=[ft.Container(scale=view_scale,margin=ft.margin.symmetric(horizontal=1))],
+            alignment=ft.MainAxisAlignment.CENTER,
+            expand=True,
+        )],
+        alignment=ft.MainAxisAlignment.CENTER,
+        expand=True,
+    )
     def CMD(e):
         global CipherControls
         if Cipher_Index == 0:
@@ -74,7 +99,7 @@ def main(page: ft.Page):
             ft.Text("Caesar Cipher",theme_style=ft.TextThemeStyle.DISPLAY_SMALL),
             ft.TextField(label="Input",multiline=True),
             ft.Row(controls=[
-                ft.TextField(label="Shifts",input_filter=ft.NumbersOnlyInputFilter(),width=75),
+                ft.TextField(label="Shifts",input_filter=ft.NumbersOnlyInputFilter(),width=75,value="1"),
                 ft.Dropdown(width=100,value="Encrypt",options=[
                     ft.dropdown.Option("Encrypt"),
                     ft.dropdown.Option("Decrypt"),
@@ -86,7 +111,7 @@ def main(page: ft.Page):
         ft.Column(controls= [# Vigenere
             ft.Text("Vigenere Cipher",theme_style=ft.TextThemeStyle.DISPLAY_SMALL),
             ft.TextField(label="Input",multiline=True),
-            ft.TextField(label="Key",input_filter=ft.TextOnlyInputFilter()),
+            ft.TextField(label="Key",input_filter=ft.TextOnlyInputFilter(),value="ABC"),
             ft.Row(controls=[
                 ft.Switch(label="Decryption Key",value=False,width=175,on_change=vigenere_dec_key_change),
                 ft.Dropdown(width=100,value="Encrypt",options=[
@@ -104,7 +129,7 @@ def main(page: ft.Page):
             ft.Row(controls=[
                 ft.Dropdown(width=100,value="1",label="Multiplier",
                     options=[ft.dropdown.Option(str(op)) for op in Affine_Multiplier_Options],),
-                ft.TextField(label="Shifts",input_filter=ft.NumbersOnlyInputFilter(),width=75),
+                ft.TextField(label="Shifts",input_filter=ft.NumbersOnlyInputFilter(),width=75,value="1"),
                 ft.Dropdown(width=100,value="Encrypt",options=[
                     ft.dropdown.Option("Encrypt"),
                     ft.dropdown.Option("Decrypt"),
@@ -115,7 +140,7 @@ def main(page: ft.Page):
         ]),
         ft.Column(controls= [# Bifid
             ft.Text("Bifid Cipher",theme_style=ft.TextThemeStyle.DISPLAY_SMALL),
-            ft.Text('*The "J/j"s will get converted to "I/i"s.',theme_style=ft.TextThemeStyle.HEADLINE_SMALL),
+            ft.Text('*The "J/j"s will get converted to "I/i"s.',theme_style=ft.TextThemeStyle.TITLE_SMALL),
             ft.TextField(label="Input",multiline=True),
             ft.Row(controls=[
                 ft.Dropdown(width=100,value="Encrypt",options=[
@@ -140,7 +165,7 @@ def main(page: ft.Page):
         display_cipher_update()
     def display_cipher_update():
         global Cipher_Index,Display_Cipher
-        Display_Cipher.content = CipherControls[Cipher_Index]
+        Display_Cipher.controls[0].controls[0].content = CipherControls[Cipher_Index]
         page.update()
     display_cipher_update()
     page.appbar = ft.AppBar(
